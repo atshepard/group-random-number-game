@@ -11,35 +11,38 @@ let guesses = [];
 //array to hold results:
 let results = [];
 
+
+//compares each item in a given array to a given number:
 function compare(array, number) {
-  // array.forEach(player => {
-  //   // compares input guess with random number and pushes a boolean to result array
-  //   results.push({
-  //         playerNum: player.playerNum,
-  //         check: player.guess === number
-  //         });
-  // })
+  //loops through the given array
       for (const player of array) {
+        //if the guess is greater than the random number
         if (player.guess>rdmNum){
-        results.push({
-                  playerNum: player.playerNum,
-                  check: player.guess == number,
-                  closeness: "too high"
-                  });
+          //push an object with player number, player's result, and closeness to given number
+            results.push({
+              playerNum: player.playerNum,
+              check: player.guess == number,
+              closeness: "too high"
+              });
+          //if the guess is less than the random number            
         } else if (player.guess<rdmNum){
-          results.push({
-            playerNum: player.playerNum,
-            check: player.guess == number,
-            closeness: "too low"
-            }); 
+          //push an object with player number, player result and closeness
+            results.push({
+              playerNum: player.playerNum,
+              check: player.guess == number,
+              closeness: "too low"
+              }); 
+          //if the player guess is neither higher nor lower  
         } else {
-          results.push({
-            playerNum: player.playerNum,
-            check: player.guess == number,
-            closeness: "YOU WIN"
-            });
+          //this player wins!
+            results.push({
+              playerNum: player.playerNum,
+              check: player.guess == number,
+              closeness: "YOU WIN"
+              });
         }
-}
+      }
+//returns the results array
 return results;
 }
 
@@ -49,20 +52,17 @@ app.use(bodyParser.urlencoded({extended:true}))
 // Serve up static files (HTML, CSS, Client JS)
 app.use(express.static('server/public'));
 
-// GET & POST Routes go here
-
+// GET & POST Routes go here:
 // receives input guesses from client and adds them to guesses array
 app.post('/input', (req, res) => {
   console.log('POST input', guesses.push(req.body));
 
   res.sendStatus(201); // 201 -> Created
 });
-
-//get results route
-app.get('/input', function(req, res){
 //get results from comparison between user guesses POST and random number: 
+app.get('/input', function(req, res){
   console.log('getting /inputs');
-  res.send(compare(guesses, 12));
+  res.send(compare(guesses, rdmNum));
 });
 
 

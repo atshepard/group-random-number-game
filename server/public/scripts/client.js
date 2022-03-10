@@ -12,8 +12,10 @@ function handleSubmit(){
     url: '/input',
     method: 'POST',
     // data should ALWAYS be a object
+    //this data turns in to the 'req.body' on the server side post
     data: { 
-        // // ?????????? 
+        playerNum: playerNum,
+        guess: guess
     }
 }).then(function(response) {
     console.log(response); 
@@ -21,9 +23,18 @@ function handleSubmit(){
 })
 }
 
-function retrieveRandomNumber(){
-  // ajax get Random number
-  
+function retrieveResults(){
+  // ajax get results from random num comparison: 
+  $.ajax({
+    url: '/input',
+    method: 'GET'
+}).then(function(response) {
+  //console.log the 'results' array sent from the app.get server side
+    console.log(response);
+}).catch(function(error){
+    console.log(error);
+    alert('error in GET')
+})
 }
 
 

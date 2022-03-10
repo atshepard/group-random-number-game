@@ -1,21 +1,31 @@
 const express = require('express');
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
 const app = express();
 const PORT = 5000;
 
 //server-side data: 
 //module for random number generator: 
 let rdmNum = require('./modules/random');
-//array to hold guesses
+//array of objects consisting of playerNum and corresponding guess
 let guesses = [];
 //array to hold results:
 let results = [];
 
-function compare(array, number){
-  array.forEach(item => {
-    // compares input guess with random number and pushes a boolean to result array
-    results.push(item === number);
-  });
+function compare(array, number) {
+  // array.forEach(player => {
+  //   // compares input guess with random number and pushes a boolean to result array
+  //   results.push({
+  //         playerNum: player.playerNum,
+  //         check: player.guess === number
+  //         });
+  // })
+      for (const player of array) {
+        results.push({
+                  playerNum: player.playerNum,
+                  check: player.guess == number
+                  });
+        }
+
   return results;
 }
 
@@ -38,7 +48,7 @@ app.post('/input', (req, res) => {
 app.get('/input', function(req, res){
 //get results from comparison between user guesses POST and random number: 
   console.log('getting /inputs');
-res.send(results);
+  res.send(compare(guesses, rdmNum));
 });
 
 

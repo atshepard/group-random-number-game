@@ -20,13 +20,27 @@ function compare(array, number) {
   //         });
   // })
       for (const player of array) {
+        if (player.guess>rdmNum){
         results.push({
                   playerNum: player.playerNum,
-                  check: player.guess == number
+                  check: player.guess == number,
+                  closeness: "too high"
                   });
+        } else if (player.guess<rdmNum){
+          results.push({
+            playerNum: player.playerNum,
+            check: player.guess == number,
+            closeness: "too low"
+            }); 
+        } else {
+          results.push({
+            playerNum: player.playerNum,
+            check: player.guess == number,
+            closeness: "YOU WIN"
+            });
         }
-
-  return results;
+}
+return results;
 }
 
 // This must be added before GET & POST routes.

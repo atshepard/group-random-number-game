@@ -12,7 +12,6 @@ function handleSubmit(){
     playerNum: 0,
     guess: $('#playerZero').val()
   }
- console.log(pZero);
   let pOne = {
     playerNum: 1,
     guess: $('#playerOne').val()}
@@ -25,9 +24,10 @@ function handleSubmit(){
     playerNum: 3,
     guess:  $('#playerThree').val()}
 
+    let playerArray = [pZero, pOne, pTwo, pThree];
     //LOOP THROUGH ARRAY OF OBJECT DATA FROM DOM
     //HAVE AJAX POST EACH INDIVIDUAL 
-    
+for (let guess of playerArray) {   
   // ajax post guesses
   $.ajax({
     url: '/input',
@@ -35,8 +35,8 @@ function handleSubmit(){
     // data should ALWAYS be a object
     //this data turns in to the 'req.body' on the server side post
     data: { 
-          playerNum: 0,
-          guess: $('#playerZero').val()
+          playerNum: guess.playerNum,
+          guess: guess.guess
           },
             // pZero
             // pOne,
@@ -59,6 +59,7 @@ function handleSubmit(){
     console.log(response); 
     $('.input').val('');
 })
+}  // end for
 }
 
 function retrieveResults(){
@@ -75,6 +76,7 @@ function retrieveResults(){
     alert('error in GET')
 })
 }
+
 
 // function renderToDOM (results){
 //   if (results.playerNum === 0){

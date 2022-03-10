@@ -37,7 +37,7 @@ app.post('/input', (req, res) => {
 //get results route
 app.get('/input', function(req, res){
 //get results from comparison between user guesses POST and random number: 
-  console.log('getting inputs');
+  console.log('getting /inputs');
 res.send(results);
 });
 

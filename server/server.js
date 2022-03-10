@@ -7,7 +7,7 @@ const PORT = 5000;
 //module for random number generator: 
 let rdmNum = require('./modules/random');
 //array of objects consisting of playerNum and corresponding guess
-let guesses = [];
+let guesses = []; 
 //array to hold results:
 let results = [];
 
@@ -48,7 +48,7 @@ app.post('/input', (req, res) => {
 app.get('/input', function(req, res){
 //get results from comparison between user guesses POST and random number: 
   console.log('getting /inputs');
-  res.send(compare(guesses, rdmNum));
+  res.send(compare(guesses, 12));
 });
 
 

@@ -7,6 +7,27 @@ function handleReady() {
 
 function handleSubmit(){
   console.log( 'inside of submit' );
+
+  let pZero = {
+    playerNum: 0,
+    guess: $('#playerZero').val()
+  }
+ console.log(pZero);
+  let pOne = {
+    playerNum: 1,
+    guess: $('#playerOne').val()}
+
+  let pTwo = {
+    playerNum: 2,
+    guess: $('#playerTwo').val()}
+
+  let pThree = {
+    playerNum: 3,
+    guess:  $('#playerThree').val()}
+
+    //LOOP THROUGH ARRAY OF OBJECT DATA FROM DOM
+    //HAVE AJAX POST EACH INDIVIDUAL 
+    
   // ajax post guesses
   $.ajax({
     url: '/input',
@@ -14,9 +35,26 @@ function handleSubmit(){
     // data should ALWAYS be a object
     //this data turns in to the 'req.body' on the server side post
     data: { 
-        playerNum: playerNum,
-        guess: guess
-    }
+          playerNum: 0,
+          guess: $('#playerZero').val()
+          },
+            // pZero
+            // pOne,
+            // pTwo,
+            // pThree
+          // { 
+          //   playerNum: 1,
+          //   guess: $('#playerOne').val()
+          // },
+          // { 
+          //   playerNum: 2,
+          //   guess: $('#playerTwo').val()
+          // },
+          // { 
+          //   playerNum: 3,
+          //   guess: $('#playerThree').val()
+          // }
+
 }).then(function(response) {
     console.log(response); 
     $('.input').val('');
@@ -31,10 +69,15 @@ function retrieveResults(){
 }).then(function(response) {
   //console.log the 'results' array sent from the app.get server side
     console.log(response);
+    // render(response);
 }).catch(function(error){
     console.log(error);
     alert('error in GET')
 })
 }
 
-
+// function renderToDOM (results){
+//   if (results.playerNum === 0){
+//     $('#zeroGuess').append()
+//   }
+// }

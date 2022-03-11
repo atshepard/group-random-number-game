@@ -1,8 +1,27 @@
+
 $(document).ready(handleReady);
 
+let roundCount = 0;
+
 function handleReady() {
-  console.log("jquery is loaded!")
-  $('#submit').on('click', handleSubmit)
+  console.log("jquery is loaded!");
+  $('#submit').on('click', handleSubmit);
+  $('#reset').on('click', handleReset);
+}
+
+function handleReset() {
+  console.log('inside of reset');
+  
+  $.ajax({
+    url: '/reset',
+    method: 'POST',
+    data: {
+      reset: true
+    }
+  }).then(function(response) {
+    console.log(response);
+
+  })
 }
 
 function handleSubmit() {
@@ -28,8 +47,7 @@ function handleSubmit() {
   }
 
   let playerArray = [pZero, pOne, pTwo, pThree];
-  //LOOP THROUGH ARRAY OF OBJECT DATA FROM DOM
-  //HAVE AJAX POST EACH INDIVIDUAL 
+  //loop through array and post with ajax each time
   for (let guess of playerArray) {
     // ajax post guesses
     $.ajax({
@@ -48,6 +66,22 @@ function handleSubmit() {
     })
   } // end for
   retrieveResults();
+}
+
+function retrieveReset() {
+  console.log('in retrieveReset');
+
+  $.ajax({
+    url: '/reset',
+    method: 'GET'
+  }).then(function(response) {
+    console.log(response);
+    roundCount = 0;
+    $('#tbodyToClear').empty();
+  }).catch(function(error) {
+    alert('ERROR IN GET')
+  })
+  
 }
 
 function retrieveResults() {
@@ -74,20 +108,23 @@ function retrieveResults() {
 
 function render(results) {
 
-$('tbody').empty();
+$('#tbodyToClear').empty();
+roundCount++;
 
-$('tbody').append(
-          `<tr>
-            <td>${round}</td>
-            <td>${results[0].guess}</td>
-            <td>${results[0].closeness}</td>
-            <td>${results[1].guess}</td>
-            <td>${results[1].closeness}</td>
-            <td>${results[2].guess}</td>
-            <td>${results[2].closeness}</td>
-            <td>${results[3].guess}</td>
-            <td>${results[3].closeness}</td>
-          </tr>`
-        )
 
+for (let i=0; i < results.length; i+=4) {
+  $('tbody').append(
+    `<tr>
+      <td>${roundCount}</td>
+      <td>${results[i].guess}</td>
+      <td>${results[i].closeness}</td>
+      <td>${results[i+1].guess}</td>
+      <td>${results[i+1].closeness}</td>
+      <td>${results[i+2].guess}</td>
+      <td>${results[i+2].closeness}</td>
+      <td>${results[i+3].guess}</td>
+      <td>${results[i+3].closeness}</td>
+    </tr>`
+  )
+}
 }

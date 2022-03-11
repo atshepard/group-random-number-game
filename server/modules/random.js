@@ -1,7 +1,9 @@
-let rdmNum = randomNumber(1, 25);
+// let rdmNum = randomNumber(1, 25);
 
 function randomNumber(min, max) {
     return Math.floor(Math.random() * (1 + max - min) + min);
   };
 
-  module.exports = rdmNum;
+  module.exports = {
+    randomNumber: randomNumber,
+  };
